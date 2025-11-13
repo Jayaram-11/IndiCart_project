@@ -84,7 +84,7 @@ const SellProducts = () => {
           {/* Category */}
           <div className={styles.formGroup}>
             <label htmlFor="category">Product Category</label>
-            <select id="category" required value={category} onChange={(e) => setCategory(e.targe.value)}>
+            <select id="category" required value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="Ebooks">Ebooks</option>
               <option value="Templates">Templates</option>
               <option value="Art">Art</option>
