@@ -1,21 +1,16 @@
 // indicart/src/pages/SsoLogoutPage.jsx
 
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // Get your main app's AuthContext
+import { useAuth } from '../context/AuthContext';
 
 const SsoLogoutPage = () => {
-  const navigate = useNavigate();
   const { logout } = useAuth(); // Get your main app's logout function
 
   useEffect(() => {
-    // Call the main site's logout function
+    // Call the main site's logout function.
+    // The logout function itself now handles the redirect.
     logout(); 
-    
-    // Just in case the logout function doesn't redirect,
-    // we'll force it to the login page.
-    navigate('/login');
-  }, [logout, navigate]);
+  }, [logout]); // Only depend on logout
 
   // Show a simple message while it logs out
   return (

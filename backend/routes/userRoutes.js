@@ -82,6 +82,16 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.post('/logout', (req, res) => {
+  res.cookie('token', '', {
+    httpOnly: true,
+    expires: new Date(0), // Set expiry to a past date
+    secure: process.env.NODE_ENV !== 'development',
+    sameSite: 'none',
+  });
+  res.status(200).json({ message: 'Logged out successfully' });
+});
+
 // @desc    Get user profile
 router.get('/profile', protect, async (req, res) => {
   try {
