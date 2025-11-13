@@ -61,7 +61,7 @@ router.post('/login', async (req, res) => {
       // 2. ✅ Set the token as a secure, cross-site cookie
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development', // True on Render/Vercel, false locally
+        secure: process.env.NODE_ENV !== 'development', // True on Render
         sameSite: 'none', // Required for cross-domain cookies
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       });
