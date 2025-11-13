@@ -1,0 +1,85 @@
+.header {
+  background-color: #305CDE;
+  color: white;
+  padding: 1rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navLinks a {
+  text-decoration: none;
+  color: white;
+}
+.loginButton {
+  background-color: #FF6E00; /* Custom orange color */
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: white;
+}
+
+.accountMenu {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: white;
+  color: #1f2937;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  width: 150px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.dropdown button, .dropdown a {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color : black;
+}
+
+.dropdown button:hover, .dropdown a:hover {
+  background-color: #f3f4f6;
+}
+.accountButton {
+  background-color: #FF6E00; /* Custom orange color */
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  color: white;
+  font-size: 1rem; /* Ensures font size matches other links */
+}
+
+.accountMenu {
+  position: relative;
+}

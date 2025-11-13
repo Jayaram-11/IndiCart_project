@@ -1,0 +1,26 @@
+/* ... You can copy .container, .heading, .table, .backLink from AdminUserList.module.css ... */
+.container { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+.heading { font-size: 2rem; font-weight: bold; color: #111827; margin-bottom: 2rem; }
+.backLink { display: inline-block; text-decoration: none; color: #6b7280; font-weight: 600; margin-bottom: 1rem; }
+.table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border-radius: 0.5rem; overflow: hidden; }
+.table th, .table td { text-align: left; padding: 1rem; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
+.table th { background-color: #f9fafb; font-weight: 600; color: #374151; }
+
+/* New specific styles for products */
+.productImage {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 0.25rem;
+}
+
+.deleteButton {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+.deleteButton:hover { background-color: #dc2626; }

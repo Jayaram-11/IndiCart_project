@@ -1,0 +1,71 @@
+.backLink {
+  display: inline-block;
+  text-decoration: none;
+  color: #6b7280; /* Gray color */
+  font-weight: 600;
+  margin-bottom: 1rem;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: #111827; /* Darker on hover */
+}
+
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heading {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 2rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.table th, .table td {
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+}
+
+.deleteButton {
+  background-color: #ef4444; /* Red color for danger */
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.deleteButton:hover {
+  background-color: #dc2626;
+}
+
+/* Badge for user roles */
+.roleBadge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+.buyer { background-color: #dbeafe; color: #1e40af; }
+.seller { background-color: #d1fae5; color: #065f46; }
+.admin { background-color: #fee2e2; color: #991b1b; }

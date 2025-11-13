@@ -1,0 +1,10 @@
+.star {
+    cursor: pointer;
+    color: #e5e7eb; /* Light gray for empty stars */
+    font-size: 1.5rem;
+    transition: color 0.2s;
+}
+
+.star.filled {
+    color: #facc15; /* Golden-yellow for filled stars */
+}
