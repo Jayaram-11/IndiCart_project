@@ -91,7 +91,6 @@ router.post('/logout', (req, res) => {
   });
   res.status(200).json({ message: 'Logged out successfully' });
 });
-
 // @desc    Get user profile
 router.get('/profile', protect, async (req, res) => {
   try {
