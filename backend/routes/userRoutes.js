@@ -58,20 +58,21 @@ router.post('/login', async (req, res) => {
         user.role
       );
 
-      // 2. ✅ Set the token as a secure, cross-site cookie
+      // 2. ✅ SET THE COOKIE (for Indicart API auth)
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development', // True on Render
-        sameSite: 'none', // Required for cross-domain cookies
+        secure: process.env.NODE_ENV !== 'development',
+        sameSite: 'none',
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       });
 
-      // 3. ✅ Send back user data *without* the token in the body
+      // 3. ✅ SEND THE TOKEN IN JSON (for Auction App SSO)
       res.status(200).json({
         _id: user._id,
         fullName: user.fullName,
         email: user.email,
         role: user.role,
+        token: token, // 👈 THIS IS THE NEWLY ADDED LINE
       });
     } else {
       res.status(401).json({ message: 'Invalid email or password' });

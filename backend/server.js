@@ -4,6 +4,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
@@ -29,6 +30,7 @@ const corsOptions = {
 // Middleware
 app.use(cors(corsOptions)); // ✅ Use the specific options
 app.use(express.json());
+app.use(cookieParser());
 // ❌ We no longer need the simple app.use(cors());
 // ✅ --- END THE FIX ---
 
