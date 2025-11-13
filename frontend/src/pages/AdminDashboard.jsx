@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../api/axios'; // ✅ CHANGED
 import { useAuth } from '../context/AuthContext';
 import styles from './AdminDashboard.module.css';
 
@@ -14,7 +14,7 @@ const AdminDashboard = () => {
     const fetchStats = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
-        const { data } = await axios.get('http://localhost:5000/api/users/admin/stats', config);
+        const { data } = await axiosInstance.get('/users/admin/stats', config); // ✅ CHANGED
         setStats(data);
       } catch (error) {
         console.error('Error fetching stats:', error);

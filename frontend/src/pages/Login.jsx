@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import axiosInstance from '../api/axios'; // ✅ CHANGED
 import styles from './Login.module.css';
 
 const Login = () => {
@@ -13,8 +13,13 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post('http://localhost:5000/api/users/login', { email, password });
-      login(data); // Pass user data (including token) to the context
+      // ✅ This now uses your axiosInstance, which will send cookies
+      const { data } = await axiosInstance.post('/users/login', { email, password }); // ✅ CHANGED
+      
+      // ✅ This login() function will now receive the user data *without* the token.
+      // The token will be set as a cookie by the backend (once you make my other fix).
+      // Your AuthContext will need to be updated to handle this.
+      login(data); 
       navigate('/');
     } catch (error) {
       alert(error.response.data.message || 'An error occurred.');

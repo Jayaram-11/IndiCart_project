@@ -1,4 +1,4 @@
-// indicart/routes/userRoutes.js (UPDATED FOR SSO)
+// indicart/routes/userRoutes.js (UPDATED FOR SSO + SECURE COOKIE LOGIN)
 
 import express from 'express';
 import User from '../models/userModel.js';
@@ -43,18 +43,35 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// @desc    Login user
+// @desc    Login user (UPDATED FOR SECURE COOKIE)
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
+
     if (user && (await bcrypt.compare(password, user.password))) {
-      res.json({
+      // 1. Generate the token
+      const token = generateToken(
+        user._id,
+        user.fullName,
+        user.email,
+        user.role
+      );
+
+      // 2. ✅ Set the token as a secure, cross-site cookie
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== 'development', // True on Render/Vercel, false locally
+        sameSite: 'none', // Required for cross-domain cookies
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      });
+
+      // 3. ✅ Send back user data *without* the token in the body
+      res.status(200).json({
         _id: user._id,
         fullName: user.fullName,
         email: user.email,
         role: user.role,
-        token: generateToken(user._id, user.fullName, user.email, user.role),
       });
     } else {
       res.status(401).json({ message: 'Invalid email or password' });

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../api/axios'; // ✅ CHANGED
 import ProductCard from '../components/ProductCard';
 import ProductModal from '../components/ProductModal';
 import styles from './Home.module.css';
@@ -11,7 +11,7 @@ const Home = () => {
   // ✅ Define fetchProducts outside useEffect so it can be reused
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/products');
+      const { data } = await axiosInstance.get('/products'); // ✅ CHANGED
       // Get the 4 most recent products
       setProducts(data.slice(0, 4));
     } catch (error) {

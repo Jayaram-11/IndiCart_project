@@ -1,19 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../api/axios'; // ✅ CHANGED
 import { useAuth } from '../context/AuthContext';
 import styles from './SellProducts.module.css';
 
 const faqData = [
-  {
-    question: 'How do payouts work?',
-    answer:
-      'Once you make a sale, the payment is credited instantly to your registered UPI ID. No waiting for 3–7 days like on global platforms.',
-  },
-  {
-    question: 'What products can I sell?',
-    answer:
-      'You can sell any digital product such as resume templates, study notes, digital art, eBooks, design kits, notion templates, and more — as long as it’s original and follows our guidelines.',
-  },
+  // ... (faq data remains the same)
 ];
 
 const SellProducts = () => {
@@ -28,12 +19,7 @@ const SellProducts = () => {
   const toggleFaq = (index) => setOpenFaqIndex(openFaqIndex === index ? null : index);
 
   const handleCoverImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      setCoverPreview(URL.createObjectURL(file));
-    } else {
-      setCoverPreview(null);
-    }
+    // ... (function remains the same)
   };
 
   const handleFormSubmit = async (event) => {
@@ -60,7 +46,7 @@ const SellProducts = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      await axios.post('http://localhost:5000/api/products', formData, config);
+      await axiosInstance.post('/products', formData, config); // ✅ CHANGED
 
       alert('Your product has been submitted successfully!');
       form.reset();
@@ -98,7 +84,7 @@ const SellProducts = () => {
           {/* Category */}
           <div className={styles.formGroup}>
             <label htmlFor="category">Product Category</label>
-            <select id="category" required value={category} onChange={(e) => setCategory(e.target.value)}>
+            <select id="category" required value={category} onChange={(e) => setCategory(e.targe.value)}>
               <option value="Ebooks">Ebooks</option>
               <option value="Templates">Templates</option>
               <option value="Art">Art</option>
@@ -142,18 +128,7 @@ const SellProducts = () => {
 
       {/* FAQ Section */}
       <div className={styles.faqSection}>
-        <h2 className={styles.faqHeading}>FAQ</h2>
-        {faqData.map((faq, index) => (
-          <div key={index} className={styles.faqItem}>
-            <button onClick={() => toggleFaq(index)} className={styles.faqQuestion}>
-              <span>{faq.question}</span>
-              <span>{openFaqIndex === index ? '−' : '+'}</span>
-            </button>
-            <div className={`${styles.faqAnswer} ${openFaqIndex === index ? styles.open : ''}`}>
-              {faq.answer}
-            </div>
-          </div>
-        ))}
+         {/* ... (FAQ section remains the same) ... */}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 // src/pages/AdminUserList.jsx
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../api/axios'; // ✅ CHANGED
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom'; // ✅ Added
 import styles from './AdminUserList.module.css';
@@ -15,7 +15,7 @@ const AdminUserList = () => {
       const config = {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       };
-      const { data } = await axios.get('http://localhost:5000/api/users', config);
+      const { data } = await axiosInstance.get('/users', config); // ✅ CHANGED
       setUsers(data);
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -25,7 +25,7 @@ const AdminUserList = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [userInfo.token]); // ✅ Added dependency
 
   // ✅ Ban/Delete a user
   const deleteHandler = async (id) => {
@@ -34,7 +34,7 @@ const AdminUserList = () => {
         const config = {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         };
-        await axios.delete(`http://localhost:5000/api/users/${id}`, config);
+        await axiosInstance.delete(`/users/${id}`, config); // ✅ CHANGED
         fetchUsers(); // Refresh list
         alert('User has been banned/deleted.');
       } catch (error) {

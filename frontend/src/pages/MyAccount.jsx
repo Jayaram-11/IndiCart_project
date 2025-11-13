@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../api/axios'; // ✅ CHANGED
 import { useAuth } from '../context/AuthContext';
 import styles from './MyAccount.module.css';
 
@@ -13,8 +13,8 @@ const MyAccount = () => {
   const fetchProfile = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
-        const { data } = await axios.get('http://localhost:5000/api/users/profile', config);
-        login({ ...data, token: user.token });
+        const { data } = await axiosInstance.get('/users/profile', config); // ✅ CHANGED
+        login({ ...data, token: user.token }); // Assuming login updates context
       } catch (error) { console.error(error); }
   };
   useEffect(() => { fetchProfile(); }, []);
@@ -24,7 +24,7 @@ const MyAccount = () => {
     const fetchOrders = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
-        const { data } = await axios.get('http://localhost:5000/api/orders/myorders', config);
+        const { data } = await axiosInstance.get('/orders/myorders', config); // ✅ CHANGED
         setMyOrders(data);
       } catch (error) { console.error(error); }
     };
@@ -37,7 +37,7 @@ const MyAccount = () => {
       const fetchMyProducts = async () => {
         try {
           const config = { headers: { Authorization: `Bearer ${user.token}` } };
-          const { data } = await axios.get('http://localhost:5000/api/products/myproducts', config);
+          const { data } = await axiosInstance.get('/products/myproducts', config); // ✅ CHANGED
           setMyProducts(data);
         } catch (error) { console.error(error); }
       };
@@ -51,7 +51,7 @@ const MyAccount = () => {
         const fetchCommissions = async () => {
             try {
                 const config = { headers: { Authorization: `Bearer ${user.token}` } };
-                const { data } = await axios.get('http://localhost:5000/api/users/admin/commissions', config);
+                const { data } = await axiosInstance.get('/users/admin/commissions', config); // ✅ CHANGED
                 setAdminCommissions(data);
             } catch (error) { console.error(error); }
         };
@@ -64,7 +64,7 @@ const MyAccount = () => {
       if (!window.confirm('Are you sure you want to withdraw your entire balance?')) return;
       try {
           const config = { headers: { Authorization: `Bearer ${user.token}` } };
-          const { data } = await axios.post('http://localhost:5000/api/users/withdraw', {}, config);
+          const { data } = await axiosInstance.post('/users/withdraw', {}, config); // ✅ CHANGED
           alert(data.message);
           fetchProfile(); // Refresh wallet balance
       } catch (error) {
@@ -92,7 +92,7 @@ const MyAccount = () => {
                 onClick={handleWithdraw} 
                 style={{marginTop: '1rem', padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: 'bold', border:'none', borderRadius:'0.25rem', backgroundColor: 'white', color: '#305CDE'}}
               >
-                  Withdraw Funds
+                 Withdraw Funds
               </button>
             </div>
         </div>

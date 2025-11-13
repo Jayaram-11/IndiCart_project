@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../api/axios'; // ✅ CHANGED
 import styles from './CreateAccount.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -14,7 +14,7 @@ const CreateAccount = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/users/register', formData);
+      await axiosInstance.post('/users/register', formData); // ✅ CHANGED
       alert('Account created successfully! Please log in.');
       navigate('/login');
     } catch (error) {

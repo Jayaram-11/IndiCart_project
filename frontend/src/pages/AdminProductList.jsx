@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../api/axios'; // ✅ CHANGED
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import styles from './AdminProductList.module.css';
@@ -10,7 +10,7 @@ const AdminProductList = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/products');
+      const { data } = await axiosInstance.get('/products'); // ✅ CHANGED
       setProducts(data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -25,7 +25,7 @@ const AdminProductList = () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
         const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-        await axios.delete(`http://localhost:5000/api/products/${id}`, config);
+        await axiosInstance.delete(`/products/${id}`, config); // ✅ CHANGED
         alert('Product deleted successfully');
         fetchProducts(); // Refresh list
       } catch (error) {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './Product.module.css';
 import { FaLock, FaUnlock } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import axiosInstance from '../api/axios'; // ✅ CHANGED
 import StarRating from './StarRating';
 
 const ProductModal = ({ product, onClose, onReviewSuccess }) => {
@@ -11,22 +11,22 @@ const ProductModal = ({ product, onClose, onReviewSuccess }) => {
   const [isPaid, setIsPaid] = useState(false);
 
   const handleRatingSubmit = async () => {
-    if (myRating === 0) { 
-      alert('Please select a rating from 1 to 5.'); 
-      return; 
+    if (myRating === 0) {
+      alert('Please select a rating from 1 to 5.');
+      return;
     }
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      await axios.post(
-        `http://localhost:5000/api/products/${product._id}/reviews`, 
-        { rating: myRating }, 
+      await axiosInstance.post( // ✅ CHANGED
+        `/products/${product._id}/reviews`, // ✅ CHANGED
+        { rating: myRating },
         config
       );
       alert('Thank you for your review!');
       onReviewSuccess(); // ✅ Notify parent to refresh product list
       onClose(); // ✅ Close modal after submitting
-    } catch (error) { 
-      alert(error.response?.data?.message || 'Error submitting review.'); 
+    } catch (error) {
+      alert(error.response?.data?.message || 'Error submitting review.');
     }
   };
 
@@ -38,8 +38,8 @@ const ProductModal = ({ product, onClose, onReviewSuccess }) => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       // 1. Create Order
-      const { data: order } = await axios.post(
-        'http://localhost:5000/api/orders/create-razorpay-order',
+      const { data: order } = await axiosInstance.post( // ✅ CHANGED
+        '/orders/create-razorpay-order', // ✅ CHANGED
         { productId: product._id },
         config
       );
@@ -55,8 +55,8 @@ const ProductModal = ({ product, onClose, onReviewSuccess }) => {
         handler: async function (response) {
           // 3. Verify Payment
           try {
-            await axios.post(
-              'http://localhost:5000/api/orders/verify-payment',
+            await axiosInstance.post( // ✅ CHANGED
+              '/orders/verify-payment', // ✅ CHANGED
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
@@ -94,8 +94,8 @@ const ProductModal = ({ product, onClose, onReviewSuccess }) => {
 
   if (!product) return null;
 
-  const displayImageUrl = product.category === 'Art' 
-    ? product.watermarkedImageUrl 
+  const displayImageUrl = product.category === 'Art'
+    ? product.watermarkedImageUrl
     : product.coverImageUrl;
 
   return (

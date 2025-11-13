@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../api/axios'; // ✅ CHANGED
 import { useAuth } from '../context/AuthContext';
 import styles from './CreateAccount.module.css'; // Reusing existing styles
 
@@ -16,7 +16,7 @@ const BecomeSeller = () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       // Call the new profile update endpoint
-      const { data } = await axios.put('http://localhost:5000/api/users/profile', formData, config);
+      const { data } = await axiosInstance.put('/users/profile', formData, config); // ✅ CHANGED
       
       // Update the global auth state with the new user data (which now has role: 'Seller')
       login(data); 
