@@ -16,15 +16,15 @@ const ProductModal = ({ product, onClose, onReviewSuccess }) => {
       return;
     }
     try {
-      const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      await axiosInstance.post( // ✅ CHANGED
-        `/products/${product._id}/reviews`, // ✅ CHANGED
-        { rating: myRating },
-        config
+      // ❌ const config = { headers: { Authorization: `Bearer ${user.token}` } }; // 👈 REMOVED
+      await axiosInstance.post(
+        `/products/${product._id}/reviews`,
+        { rating: myRating }
+        // ❌ config // 👈 REMOVED
       );
       alert('Thank you for your review!');
-      onReviewSuccess(); // ✅ Notify parent to refresh product list
-      onClose(); // ✅ Close modal after submitting
+      onReviewSuccess();
+      onClose();
     } catch (error) {
       alert(error.response?.data?.message || 'Error submitting review.');
     }
@@ -36,12 +36,12 @@ const ProductModal = ({ product, onClose, onReviewSuccess }) => {
       return;
     }
     try {
-      const config = { headers: { Authorization: `Bearer ${user.token}` } };
+      // ❌ const config = { headers: { Authorization: `Bearer ${user.token}` } }; // 👈 REMOVED
       // 1. Create Order
-      const { data: order } = await axiosInstance.post( // ✅ CHANGED
-        '/orders/create-razorpay-order', // ✅ CHANGED
-        { productId: product._id },
-        config
+      const { data: order } = await axiosInstance.post(
+        '/orders/create-razorpay-order',
+        { productId: product._id }
+        // ❌ config // 👈 REMOVED
       );
 
       // 2. Configure Razorpay
@@ -55,15 +55,15 @@ const ProductModal = ({ product, onClose, onReviewSuccess }) => {
         handler: async function (response) {
           // 3. Verify Payment
           try {
-            await axiosInstance.post( // ✅ CHANGED
-              '/orders/verify-payment', // ✅ CHANGED
+            await axiosInstance.post(
+              '/orders/verify-payment',
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
                 productId: product._id,
-              },
-              config
+              }
+              // ❌ config // 👈 REMOVED
             );
             alert('Payment Successful!');
             setIsPaid(true); // Unlock download button
