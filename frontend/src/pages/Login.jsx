@@ -7,11 +7,13 @@ import styles from './Login.module.css';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     try {
       // ✅ This now uses your axiosInstance, which will send cookies
       const { data } = await axiosInstance.post('/users/login', { email, password }); // ✅ CHANGED
@@ -23,6 +25,7 @@ const Login = () => {
       navigate('/');
     } catch (error) {
       alert(error.response.data.message || 'An error occurred.');
+      setLoading(false);
     }
   };
 
@@ -33,7 +36,9 @@ const Login = () => {
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.formGroup}><label htmlFor="email">Email</label><input type="email" id="email" required value={email} onChange={(e) => setEmail(e.target.value)} /></div>
           <div className={styles.formGroup}><label htmlFor="password">Password</label><input type="password" id="password" required value={password} onChange={(e) => setPassword(e.target.value)} /></div>
-          <button type="submit" className={styles.button}>Log In</button>
+          <button type="submit" className={styles.button} disabled={loading}>
+            {loading ? 'Logging in...' : 'Log In'}
+          </button>
         </form>
         <div className={styles.linkContainer}><Link to="/create-account" className={styles.link}>Create Account</Link></div>
       </div>
